@@ -3,13 +3,13 @@ micronaut:
         name: clientpooltest
     server:
         port: 8080
-        idleTimeout: PT2S
+        idleTimeout: PT15S
     http:
         client:
-            read-timeout: PT5S
+            read-timeout: PT2S
             read-idle-timeout: PT5S
             pool:
                 enabled: true
-                max-connections: 1
+                max-connections: 10
                 max-pending-acquires: 1
                 acquire-timeout: PT0S

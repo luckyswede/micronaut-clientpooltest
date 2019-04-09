@@ -4,14 +4,16 @@ Start server
 ```
 Run
 ```
-curl localhost:8080/proxy
-curl: (52) Empty reply from server
+ab -c 1 -n 200 localhost:8080/proxy
 ```
-...which is expected because the idle-timeout is shorter than the response latency.
-However, run the same curl again:
+to warm up the app, all should be fine.
+Now run
 ```
-curl localhost:8080/proxy
-{"message":"Internal Server Error: Connect Error: Acquire operation took longer then configured maximum time"}
+ab -c 5 -n 200 localhost:8080/proxy
 ```
-shows that checking out a connection from the pool was unsuccessful.
-The pool is now stuck in this state and never recovers.
+and a few, normally 4, requests failed.
+If u run 
+```
+curl localhost:8080/i
+```
+u will see that all (400) requests has arrived at the "server".
